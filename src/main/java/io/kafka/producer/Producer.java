@@ -42,7 +42,7 @@ public class Producer<K, V> implements BrokerPartitionInfo.Callback, ITransactio
 
 	private IPartitioner<K> partitioner;
 
-	private final Logger logger = LoggerFactory.getLogger(Producer.class);
+	private static Logger logger = LoggerFactory.getLogger(Producer.class);
 	/**
 	 * 生产池
 	 */

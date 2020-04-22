@@ -100,6 +100,6 @@ public class BlockingChannel {
 	public KV<Receive, ErrorMapping> receive() throws IOException {
 		BoundedByteBufferReceive response = new BoundedByteBufferReceive();
         response.readCompletely(readChannel);
-        return new KV<Receive, ErrorMapping>(response, ErrorMapping.valueOf(response.buffer().getShort()));
+        return new KV<>(response, ErrorMapping.valueOf(response.buffer().getShort()));
 	}
 }

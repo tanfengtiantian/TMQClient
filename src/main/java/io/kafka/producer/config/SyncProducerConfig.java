@@ -10,32 +10,32 @@ import java.util.Properties;
 public class SyncProducerConfig {
 
 	public int bufferSize;
-	public int socketTimeoutMs;
-	public int maxMessageSize;
-	protected final Properties props;
-	private int connectTimeoutMs;
-	private int reconnectInterval;
-	private int reconnectTimeInterval;
+    public int socketTimeoutMs;
+    public int maxMessageSize;
+    protected final Properties props;
+    private int connectTimeoutMs;
+    private int reconnectInterval;
+    private int reconnectTimeInterval;
 
-	public SyncProducerConfig(Properties props) {
-		this.props = props;
-		this.bufferSize = Utils.getInt(props, "buffer.size", 100 * 1024);
+    public SyncProducerConfig(Properties props) {
+        this.props = props;
+        this.bufferSize = Utils.getInt(props, "buffer.size", 100 * 1024);
         this.connectTimeoutMs = Utils.getInt(props, "connect.timeout.ms", 5000);
         this.socketTimeoutMs = Utils.getInt(props, "socket.timeout.ms", 30000);
         this.reconnectInterval = Utils.getInt(props, "reconnect.interval", 100000);
         this.reconnectTimeInterval = Utils.getInt(props, "reconnect.time.interval.ms", 1000 * 1000 * 10);
         this.maxMessageSize = Utils.getInt(props, "max.message.size", 1024 * 1024);//1MB
-	}
+    }
 
-	public String getHost() {
-		return Utils.getString(props, "host");
-	}
+    public String getHost() {
+        return Utils.getString(props, "host");
+    }
 
-	public int getPort() {
-		return Utils.getInt(props, "port");
-	}
-	
-	public Properties getProperties() {
+    public int getPort() {
+        return Utils.getInt(props, "port");
+    }
+
+    public Properties getProperties() {
         return props;
     }
 

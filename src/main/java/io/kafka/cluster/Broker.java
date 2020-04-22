@@ -33,6 +33,11 @@ public class Broker {
      * 是否自动创建top
      */
     public final boolean autocreated;
+
+    /**
+     * 权重
+     */
+    public int weight = 1;
     /**
      * create a broker
      *

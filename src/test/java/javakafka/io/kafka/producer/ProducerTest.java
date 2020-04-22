@@ -45,6 +45,7 @@ public class ProducerTest {
 			e.printStackTrace();
 		} finally {
 	        producer.close();
+			System.out.println("send close");
 	    }
 	}
 }

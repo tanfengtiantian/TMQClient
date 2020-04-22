@@ -1,11 +1,6 @@
 package io.kafka.utils;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
@@ -221,6 +216,49 @@ public class Utils {
 		 if (!props.containsKey(name)) return defaultValue;
 	        return "true".equalsIgnoreCase(props.getProperty(name));
 	}
-	
+
+
+    public static byte[] jdkSerializable(Object[] args){
+	    byte[] argumentsData = null;
+        //序列化参数
+        if (args != null && args.length > 0) {
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try {
+                final ObjectOutputStream objOut = new ObjectOutputStream(out);
+                for (final Object arg : args) {
+                    objOut.writeObject(arg);
+                }
+                out.close();
+                argumentsData = out.toByteArray();
+            }
+            catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return argumentsData;
+    }
+
+    public static Object jdkDeserialization(byte[] data) {
+        Object obj = null;
+        final ByteArrayInputStream in = new ByteArrayInputStream(data);
+        try {
+            final ObjectInputStream objIn = new ObjectInputStream(in);
+            obj = objIn.readObject();
+            return obj;
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                in.close();
+            }
+            catch (final IOException e) {
+                // ignore
+            }
+        }
+    }
+
+
 
 }

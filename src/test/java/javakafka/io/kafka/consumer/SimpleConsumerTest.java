@@ -17,7 +17,7 @@ public class SimpleConsumerTest {
 		long offset = 0;//2250;
 		
 		while (true) {
-		    FetchRequest request = new FetchRequest("hu", 0, offset);
+		    FetchRequest request = new FetchRequest("lcc", 0, offset);
 		    for (MessageAndOffset msg : consumer.fetch(request)) {
 		        System.out.println(Utils.toString(msg.message.payload(), "UTF-8")+" offset = "+msg.offset);
 		        offset = msg.offset;

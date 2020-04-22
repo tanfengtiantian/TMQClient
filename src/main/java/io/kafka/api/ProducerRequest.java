@@ -3,6 +3,8 @@ package io.kafka.api;
 import java.nio.ByteBuffer;
 import io.kafka.cluster.Partition;
 import io.kafka.common.ErrorMapping;
+import io.kafka.common.exception.ErrorMappingException;
+import io.kafka.common.exception.RpcRuntimeException;
 import io.kafka.message.ByteBufferMessageSet;
 import io.kafka.network.request.Request;
 import io.kafka.producer.SendResult;
@@ -56,17 +58,18 @@ public class ProducerRequest implements Request {
     }
 
     public static SendResult deserializeProducer(ByteBuffer buffer, ErrorMapping errorcode) {
-        if(errorcode == ErrorMapping.UnkonwCode){
-
+        if(errorcode == ErrorMapping.NoError){
+            String topic = Utils.readShortString(buffer);
+            int brokerId = buffer.getInt();
+            int partition = buffer.getInt();
+            long offset =buffer.getLong();
+            return new SendResult(topic
+                    ,new Partition(brokerId,partition)
+                    ,offset
+                    ,errorcode);
+        }else{
+            throw new ErrorMappingException("ErrorMapping failure:" + errorcode.toString());
         }
-    	String topic = Utils.readShortString(buffer);
-        int brokerId = buffer.getInt();
-        int partition = buffer.getInt();
-        long offset =buffer.getLong();
-        return new SendResult(topic
-        					  ,new Partition(brokerId,partition)
-        					  ,offset
-        					  ,errorcode);
     }
 	
 	@Override
